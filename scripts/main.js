@@ -1,4 +1,6 @@
 var storedBooks = [];
+var selectedBook;
+var selectedBookIndex;
 
 initializePage();
 
@@ -10,7 +12,9 @@ function initializePage() {
 
 function initializeEventListeners() {
   let addButton = document.getElementById('add-btn');
-  let newLibraryCardButton = document.getElementById('new-library-card');
+  let closeButton = document.getElementById('close-btn');
+  let removeButton = document.getElementById('remove-btn');
+  let updateButton = document.getElementById('update-btn');
 
   addButton.addEventListener('click', (e) => {
     let bookTitle = document.getElementById('bookTitle').value;
@@ -18,11 +22,16 @@ function initializeEventListeners() {
     let bookPages = document.getElementById('bookPages').value;
     let bookRead = document.getElementById('bookRead').checked;
     addBookToLibrary(bookTitle, bookAuthor, bookPages, bookRead);
-  })
+  });
 
-  newLibraryCardButton.addEventListener('click', (e) => {
-    togglePopupBox(true);
-  })
+  removeButton.addEventListener('click', (e) => {
+    removeBookFromLibrary(selectedBookIndex);
+    togglePopupBox(false);
+  });
+
+  closeButton.addEventListener('click', (e) => {
+    togglePopupBox(false);
+  });
 }
 
 function initializeLibraryCards() {
@@ -31,6 +40,7 @@ function initializeLibraryCards() {
   for(let x=0; x<storedBooks.length; x++) {
     let libraryCardBox = document.createElement('div');
     libraryCardBox.classList.add('library-card')
+    
     for(const prop in storedBooks[x]) {
       let libraryCardDetail = document.createElement('div');
       if(prop == 'read') {
@@ -38,6 +48,23 @@ function initializeLibraryCards() {
       } else libraryCardDetail.innerText = storedBooks[x][prop];
       libraryCardBox.appendChild(libraryCardDetail);
     }
+
+    libraryCardBox.addEventListener('click', (e) => {
+      let index = (Array.prototype.indexOf.call(libraryCardBox.parentNode.childNodes, libraryCardBox));
+      selectedBookIndex = index;
+      selectedBook = storedBooks[index];
+      let bookTitleElement = document.getElementById('bookTitle');
+      let bookAuthorElement = document.getElementById('bookAuthor');
+      let bookPagesElement = document.getElementById('bookPages');
+      let bookReadElement = document.getElementById('bookRead');
+
+      bookTitleElement.value = selectedBook.title;
+      bookAuthorElement.value = selectedBook.author;
+      bookPagesElement.value = selectedBook.pages;
+      bookReadElement.checked = selectedBook.read;
+      togglePopupBox(true);
+    });
+
     libraryContainer.appendChild(libraryCardBox);
   }
   
@@ -45,12 +72,14 @@ function initializeLibraryCards() {
   addLibraryCardBox = document.createElement('div');
   addLibraryCardBox.setAttribute('id', 'new-library-card');
   addLibraryCardBox.innerText = '+';
+  addLibraryCardBox.addEventListener('click', (e) => {
+    togglePopupBox(true);
+  })
   libraryContainer.appendChild(addLibraryCardBox);
 }
 
 
-function Book(bookTitle, bookAuthor, bookPages, bookRead, keyID) {
-  this.keyID = keyID;
+function Book(bookTitle, bookAuthor, bookPages, bookRead) {
   this.title = bookTitle;
   this.author = bookAuthor;
   this.pages = bookPages;
@@ -58,19 +87,18 @@ function Book(bookTitle, bookAuthor, bookPages, bookRead, keyID) {
 }
 
 function addBookToLibrary(bookTitle, bookAuthor, bookPages, bookRead) {
-  let keyID = storedBooks.length + 1;
-  let newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead, keyID);
-  Object.defineProperty(newBook, 'keyID', {enumerable: false});
+  let newBook = new Book(bookTitle, bookAuthor, bookPages, bookRead);
   storedBooks.push(newBook);
-  initializeLibraryCards();
+  initializeLibraryCards(); // refresh library
 }
 
-function editBookFromLibrary(keyID) {
+function editBookFromLibrary(index) {
 
 }
 
-function removeBookFromLibrary() {
-
+function removeBookFromLibrary(index) {
+  storedBooks.splice(index, 1);
+  initializeLibraryCards(); // refresh library
 }
 
 function togglePopupBox(show) {
