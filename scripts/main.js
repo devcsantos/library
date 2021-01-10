@@ -3,12 +3,14 @@ var storedBooks = [];
 initializePage();
 
 function initializePage() {
+  togglePopupBox(false); // hide form initially
   initializeLibraryCards();
   initializeEventListeners();
 }
 
 function initializeEventListeners() {
   let addButton = document.getElementById('add-btn');
+  let newLibraryCardButton = document.getElementById('new-library-card');
 
   addButton.addEventListener('click', (e) => {
     let bookTitle = document.getElementById('bookTitle').value;
@@ -16,6 +18,10 @@ function initializeEventListeners() {
     let bookPages = document.getElementById('bookPages').value;
     let bookRead = document.getElementById('bookRead').checked;
     addBookToLibrary(bookTitle, bookAuthor, bookPages, bookRead);
+  })
+
+  newLibraryCardButton.addEventListener('click', (e) => {
+    togglePopupBox(true);
   })
 }
 
@@ -59,6 +65,17 @@ function addBookToLibrary(bookTitle, bookAuthor, bookPages, bookRead) {
   initializeLibraryCards();
 }
 
+function editBookFromLibrary(keyID) {
+
+}
+
 function removeBookFromLibrary() {
 
+}
+
+function togglePopupBox(show) {
+  let popupBox= document.getElementById('popup-container');
+  if(show){
+      popupBox.classList.remove('hide-display');
+  } else popupBox.classList.add('hide-display');
 }

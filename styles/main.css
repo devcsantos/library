@@ -71,9 +71,22 @@ body {
   border: 2px solid black;
 }
 
+#new-library-card:hover {
+  box-shadow: 1px 1px 3px black;
+  background-color: #DFF3E3;
+  cursor: pointer;
+}
+
+.hide-display {
+  display:none;
+}
+
 #popup-container {
   position: fixed;
   background-color: white;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid black;
+  border-radius: 15px;
   padding: 50px;
   width: auto;
   height: 500px;
@@ -87,6 +100,9 @@ body {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  font-size: 25px;
+  line-height: 50px;
+  align-items: center;
 }
 
 .control-btn {
@@ -98,6 +114,7 @@ body {
   line-height: 32px;
   background-color: #BEE5BF;
   transition: background-color 0.4s ease-out;
+  margin-top: auto;
 }
 
 .control-btn:hover {
@@ -106,6 +123,24 @@ body {
   cursor: pointer;
 }
 
-input {
+.number-input {
   line-height: 25px;
+  font-size: 25px;
+  border-radius: 5px;
+  width: 100px;
+}
+
+.number-input:hover {
+  box-shadow: 1px 1px 3px black;
+}
+
+.text-input {
+  line-height: 25px;
+  font-size: 20px;
+  width: 250px;
+  border-radius: 5px;
+}
+
+.text-input:hover {
+  box-shadow: 1px 1px 3px black;
 }
