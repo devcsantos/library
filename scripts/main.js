@@ -29,6 +29,10 @@ function initializeEventListeners() {
     togglePopupBox(false);
   });
 
+  updateButton.addEventListener('click', (e) => {
+    editBookFromLibrary(selectedBookIndex);
+  });
+
   closeButton.addEventListener('click', (e) => {
     togglePopupBox(false);
   });
@@ -93,7 +97,17 @@ function addBookToLibrary(bookTitle, bookAuthor, bookPages, bookRead) {
 }
 
 function editBookFromLibrary(index) {
+  let bookTitleElement = document.getElementById('bookTitle');
+  let bookAuthorElement = document.getElementById('bookAuthor');
+  let bookPagesElement = document.getElementById('bookPages');
+  let bookReadElement = document.getElementById('bookRead');
 
+  selectedBook.title = bookTitleElement.value;
+  selectedBook.author = bookAuthorElement.value;
+  selectedBook.pages = bookPagesElement.value;
+  selectedBook.read = bookReadElement.checked;
+  togglePopupBox(false);
+  initializeLibraryCards(); // refresh library
 }
 
 function removeBookFromLibrary(index) {
