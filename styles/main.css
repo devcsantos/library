@@ -70,3 +70,42 @@ body {
   text-align: center;
   border: 2px solid black;
 }
+
+#popup-container {
+  position: fixed;
+  background-color: white;
+  padding: 50px;
+  width: auto;
+  height: 500px;
+  top: 25%;
+  left: 25%;
+  right: 25%;
+  bottom: 25%;
+}
+
+#popup-form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.control-btn {
+  display: inline-block;
+  text-align: center;
+  padding: 5px;
+  border: solid 1px black;
+  color: black;
+  line-height: 32px;
+  background-color: #BEE5BF;
+  transition: background-color 0.4s ease-out;
+}
+
+.control-btn:hover {
+  box-shadow: 1px 1px 3px black;
+  background-color: #DFF3E3;
+  cursor: pointer;
+}
+
+input {
+  line-height: 25px;
+}
